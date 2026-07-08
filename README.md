@@ -1,4 +1,8 @@
-# Data Mining & Analysis - Comprehensive Learning Resource
+# Data Mining & Analysis - University Learning Resource
+
+[![CI](https://github.com/Alierkn/Data-Mining-Lesson-Unime/actions/workflows/ci.yml/badge.svg)](https://github.com/Alierkn/Data-Mining-Lesson-Unime/actions/workflows/ci.yml)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
+[![Jupyter](https://img.shields.io/badge/Jupyter-notebooks-F37626.svg)](notebooks/)
 
 ## 📖 Course Overview
 
@@ -61,3 +65,21 @@ Learn to:
 ---
 
 ## 🗂️ Repository Structure
+
+```text
+notebooks/                  Course notebooks
+docs/                       Dataset and lecture summaries
+requirements.txt            Python dependencies
+SETUP.md                    Local setup guide
+```
+
+## Validation
+
+The CI workflow installs `requirements.txt`, compiles Python files, and checks
+that every notebook is valid JSON. Notebook execution is intentionally not part
+of CI because some lessons download datasets at runtime.
+
+## License
+
+Course text, notebooks, and educational material are licensed under
+[Creative Commons Attribution 4.0 International](LICENSE).
