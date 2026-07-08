@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  notebook-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Compile Python files
+        run: python -m compileall .
+
+      - name: Validate notebooks
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          notebooks = sorted(Path("notebooks").glob("*.ipynb"))
+          if not notebooks:
+              raise SystemExit("no notebooks found")
+
+          for path in notebooks:
+              with path.open("r", encoding="utf-8") as handle:
+                  data = json.load(handle)
+              if data.get("nbformat") != 4:
+                  raise SystemExit(f"{path} is not nbformat v4")
+              if "cells" not in data:
+                  raise SystemExit(f"{path} has no cells")
+              print(f"validated {path}")
+          PY
